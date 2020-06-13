@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour
     public float GroundCheckRadius;
     public LayerMask WhatIsGround;
     public bool Grounded;
+    public SpriteRenderer spriteRenderer;
 
     public bool dash;
     public bool dashing;
@@ -20,8 +21,10 @@ public class Movement : MonoBehaviour
 
     public bool l, u, d, r, c, x, z;
 
+
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         MoveSpeed = 5;
         JumpHeight = 4*rb.gravityScale;
@@ -66,8 +69,8 @@ public class Movement : MonoBehaviour
             stopWalk();
         }
 
-        if (l) transform.localScale = new Vector3(-1,1,1);
-        if (r) transform.localScale = new Vector3(1,1,1);
+        if (l) spriteRenderer.flipX = true;
+        if (r) spriteRenderer.flipX = false;
 
         //jump and double jump
         if (Grounded) dash = false;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -10,7 +11,11 @@ public class LevelManager : MonoBehaviour
 
     public Movement player;
 
+    public Fim fim;
+
     public float respawnDelay;
+
+    public HealthManager healthManager;
     void Start()
     {
         player = FindObjectOfType<Movement>();
@@ -23,6 +28,7 @@ public class LevelManager : MonoBehaviour
 
     public void respawnPlayer()
     {
+        healthManager.TakeDamage();
         StartCoroutine("RespawnPlayerCo");
     }
 

@@ -16,7 +16,7 @@ public class Fim : MonoBehaviour
         text.enabled = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(end == true)
         {
@@ -29,11 +29,18 @@ public class Fim : MonoBehaviour
         
     }
 
-    public void EndGame()
+    public void WinGame()
     {
         string melancia = "melancias";
         if (scoreManager.getScore() == 1) melancia = "melancia";
-        text.text = "Você deu "+scoreManager.getScore()+" "+melancia+" para Chico Melancia!";
+        text.text = "Você deu " + scoreManager.getScore() + " " + melancia + " para Chico Melancia!";
+        text.enabled = true;
+        end = true;
+        
+    }
+    public void LoseGame()
+    {
+        text.text = "Você perdeu!";
         text.enabled = true;
         end = true;
     }

@@ -21,6 +21,6 @@ public class ChicoMelancia : MonoBehaviour
         {
             Debug.Log("Chico");
         }
-        fim.EndGame();
+        fim.WinGame();
     }
 }

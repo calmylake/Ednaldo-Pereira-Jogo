@@ -19,7 +19,12 @@ public class SucoDeChocolate : MonoBehaviour
 
     void Update()
     {
-        if (cooldown >= 180)
+        
+    }
+
+    private void FixedUpdate()
+    {
+        if (cooldown >= 90)
         {
             Spawn();
         }

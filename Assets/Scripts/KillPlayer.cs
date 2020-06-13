@@ -17,11 +17,6 @@ public class KillPlayer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.name);
-        if(collision.name == "Player")
-        {
-            Debug.Log("LOL");
-            lm.respawnPlayer();
-        }
+        if(collision.name == "Player") lm.respawnPlayer();
     }
 }
