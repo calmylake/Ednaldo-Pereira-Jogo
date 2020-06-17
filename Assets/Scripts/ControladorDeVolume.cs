@@ -10,10 +10,17 @@ public class ControladorDeVolume : MonoBehaviour
     void Start()
     {
         audioSrc.volume = volume;
+        audioSrc.enabled = true;
+        audioSrc.Play();
     }
 
     void Update()
     {
         
+    }
+
+    public float getVolume()
+    {
+        return volume;
     }
 }

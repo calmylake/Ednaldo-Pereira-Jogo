@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour
     public float respawnDelay;
 
     public HealthManager healthManager;
+
     void Start()
     {
         player = FindObjectOfType<Movement>();
@@ -23,7 +24,7 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void respawnPlayer()
@@ -42,6 +43,11 @@ public class LevelManager : MonoBehaviour
         player.enabled = true;
         player.GetComponent<Renderer>().enabled = true;
         player.transform.position = currentCheckpoint.transform.position;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        StartCoroutine("RespawnPlayerCo");
     }
 
 }

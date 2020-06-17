@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     public float MoveSpeed;
     public float JumpHeight;
 
+    public Animator animator;
     public Transform GroundCheck;
     public float GroundCheckRadius;
     public LayerMask WhatIsGround;
@@ -20,8 +21,6 @@ public class Movement : MonoBehaviour
     public int dashAnimation;
 
     public bool l, u, d, r, c, x, z;
-
-
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -36,6 +35,8 @@ public class Movement : MonoBehaviour
     void FixedUpdate()
     {
         Grounded = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, WhatIsGround);
+        if (Grounded) animator.SetBool("Grounded", true);
+        else animator.SetBool("Grounded", false);
         if (dashing == true)
         {
             if(dashAnimation >= 30 || Grounded)
@@ -85,14 +86,17 @@ public class Movement : MonoBehaviour
             if (u) tempY = JumpHeight;
             if (d) tempY = -JumpHeight;
 
-            if (tempX != 0 && tempY != 0) Dash(new Vector2(tempX*0.8f, tempY*0.8f));
+            if (tempX != 0 && tempY != 0) Dash(new Vector2(tempX * 0.8f, tempY * 0.8f));
             else if (tempX == 0 && tempY == 0) { }
             else Dash(new Vector2(tempX, tempY));
 
         }
+
+        animator.SetFloat("Velocity", Math.Abs(rb.velocity.x));
+
     }
 
-    
+
 
     private void setAllInputVarFalse()
     {

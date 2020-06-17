@@ -8,6 +8,10 @@ public class SucoDeChocolate : MonoBehaviour
     CapsuleCollider2D capsuleCol;
     Vector3 startScale;
 
+    public AudioSource[] sound;
+
+    ControladorDeVolume volumeController;
+
     int cooldown;
     void Start()
     {
@@ -15,6 +19,14 @@ public class SucoDeChocolate : MonoBehaviour
         startScale = transform.localScale;
         cooldown = 0;
         taken = false;
+
+        volumeController = FindObjectOfType<ControladorDeVolume>();
+        int i = 0;
+        while (i < sound.Length)
+        {
+            sound[i].volume = volumeController.getVolume();
+            i++;
+        }
     }
 
     void Update()
@@ -54,5 +66,8 @@ public class SucoDeChocolate : MonoBehaviour
         transform.localScale = new Vector3(0,0,0);
         taken = true;
         capsuleCol.enabled = false;
+        int tempInt = new System.Random().Next(0, sound.Length - 1);
+        sound[tempInt].enabled = true;
+        sound[tempInt].Play();
     }
 }
