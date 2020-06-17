@@ -5,7 +5,7 @@ using UnityEngine;
 public class SucoDeChocolate : MonoBehaviour
 {
     bool taken;
-    CapsuleCollider2D capsuleCol;
+    public CapsuleCollider2D capsuleCol;
     Vector3 startScale;
 
     public AudioSource[] sound;
@@ -15,7 +15,6 @@ public class SucoDeChocolate : MonoBehaviour
     int cooldown;
     void Start()
     {
-        capsuleCol = FindObjectOfType<CapsuleCollider2D>();
         startScale = transform.localScale;
         cooldown = 0;
         taken = false;

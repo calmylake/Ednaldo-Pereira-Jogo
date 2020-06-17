@@ -19,6 +19,8 @@ public class Movement : MonoBehaviour
     public bool dash;
     public bool dashing;
     public int dashAnimation;
+    public bool movEnabled;
+    public int timeToEnable;
 
     public bool l, u, d, r, c, x, z;
     void Start()
@@ -30,10 +32,17 @@ public class Movement : MonoBehaviour
         l = false; u = false; d = false; r = false;
         dashAnimation = 0;
         dashing = false;
+        movEnabled = false;
+        timeToEnable = 250;
     }
 
     void FixedUpdate()
     {
+        if (timeToEnable < 0)
+        {
+            movEnabled = true;
+        }
+        else timeToEnable--;
         Grounded = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, WhatIsGround);
         if (Grounded) animator.SetBool("Grounded", true);
         else animator.SetBool("Grounded", false);
@@ -51,6 +60,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        if (!movEnabled) { return; }
         setAllInputVarFalse();
         setSomeInputVarTrue();
 

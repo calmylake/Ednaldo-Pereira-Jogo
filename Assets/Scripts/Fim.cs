@@ -12,6 +12,12 @@ public class Fim : MonoBehaviour
     public Text text;
     int countEnd;
     bool end;
+    bool start;
+    float endSpeed;
+
+    public string sceneLose;
+    public string sceneWin;
+    string scene;
 
     public AudioSource soundWin;
     public AudioSource soundLose;
@@ -20,19 +26,26 @@ public class Fim : MonoBehaviour
     {
         volumeController = FindObjectOfType<ControladorDeVolume>();
         soundWin.volume = soundLose.volume = volumeController.getVolume();
-
-        blackBG.color = new Color(0,0,0,0);
-        blackBG.enabled = false;
+        endSpeed = 1;
+        blackBG.color = new Color(0,0,0,1);
+        blackBG.enabled = true;
         end = false;
+        start = true;
         text.enabled = false;
     }
 
     void FixedUpdate()
     {
+        if(start == true)
+        {
+            float fadeInRatio = 0.04f;
+            if (blackBG.color.a > fadeInRatio) { blackBG.color -= new Color(0, 0, 0, fadeInRatio); }
+            else if(blackBG.color.a <= fadeInRatio) { blackBG.color = new Color(0, 0, 0, 0); blackBG.enabled = false; start = false; }
+        }
         if(end == true)
         {
-            if (countEnd < 100) { blackBG.color += new Color(0, 0, 0, 0.08f); }
-            else if (countEnd > 200) SceneManager.LoadScene("menu");
+            if (countEnd < 50*endSpeed) { blackBG.color += new Color(0, 0, 0, 0.08f); }
+            else if (countEnd > 150*endSpeed) SceneManager.LoadScene(scene);
             countEnd++;
         }
         
@@ -40,7 +53,9 @@ public class Fim : MonoBehaviour
 
     public void WinGame()
     {
-        player.enabled = false;
+        scene = sceneWin;
+        player.movEnabled = false;
+        player.stopWalk();
         string melancia = "melancias";
         if (scoreManager.getScore() == 1) melancia = "melancia";
         text.text = "Você deu " + scoreManager.getScore() + " " + melancia + " para Chico Melancia!";
@@ -48,11 +63,14 @@ public class Fim : MonoBehaviour
         text.enabled = true;
         blackBG.enabled = true;
         end = true;
+        endSpeed = 3f;
         
     }
     public void LoseGame()
     {
-        player.enabled = false;
+        scene = sceneLose;
+        player.movEnabled = false;
+        player.stopWalk();
         text.text = "Você perdeu!";
         blackBG.enabled = true;
         soundLose.enabled = true; soundLose.Play();
